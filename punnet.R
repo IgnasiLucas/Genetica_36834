@@ -21,7 +21,7 @@ dihibrid <- function(n=0, palette = 'Egypt'){
                     ncol = 4, byrow = FALSE)
    par(mar = c(1, 6, 6, 1), mfrow = c(1, 2))
    image(x = 1:4, y = 1:4, z = punnet,
-         col = MetBrewer::met.brewer(palette, 4),
+         col = MetBrewer::met.brewer(palette, 4, direction = 1),
          axes = FALSE, xlab = '', ylab = '')
    axis(2, at = c(0.5, 1.5, 2.5, 3.5, 4.5), labels = c('', '', '', '', ''))
    axis(2, at = c(1, 2, 3, 4), tick = FALSE,
@@ -43,8 +43,11 @@ dihibrid <- function(n=0, palette = 'Egypt'){
 
    par(mar = c(5, 4, 4, 2))
    fenotips <- as.vector(table(punnet))
-   barplot(fenotips, col = MetBrewer::met.brewer(palette, 4),
-           names.arg = c('ab', 'aB', 'Ab', 'AB'))
+   fenotips <- sort(fenotips, decreasing = TRUE)
+   barplot(fenotips, col = MetBrewer::met.brewer(palette, 4, direction = -1),
+           names.arg = c('A-B-', 'A-bb', 'aaB-', 'aabb'),
+           xlab = 'Clases fenotípicas', ylab = 'Frecuencia esperada',
+           main = paste('Proporciones', paste0(fenotips, collapse = ':')))
 }
 
 trihibrid <- function(n=0, palette = 'Egypt'){
@@ -55,7 +58,7 @@ trihibrid <- function(n=0, palette = 'Egypt'){
                     ncol = 8, byrow = FALSE)
    par(mar = c(1, 6, 6, 1), mfrow = c(1, 2))
    image(x = 1:8, y = 1:8, z = punnet,
-         col = MetBrewer::met.brewer(palette, 8),
+         col = MetBrewer::met.brewer(palette, 8, direction = 1),
          axes = FALSE, xlab = '', ylab = '')
    axis(2, at = c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5), labels = rep('', 9))
    axis(2, at = c(1, 2, 3, 4, 5, 6, 7, 8), tick = FALSE,
@@ -75,8 +78,14 @@ trihibrid <- function(n=0, palette = 'Egypt'){
    mtext('Gameto masculino', side = 2, line = 4, cex = 2)
    mtext('Gameto femenino',  side = 3, line = 4, cex = 2)
 
-   par(mar = c(5, 4, 4, 2))
+   par(mar = c(6, 4, 4, 2))
    fenotips <- as.vector(table(punnet))
-   barplot(fenotips, col = MetBrewer::met.brewer(palette, 8),
-           names.arg = c('abc', 'abC', 'aBc', 'Abc', 'aBC', 'AbC', 'ABc', 'ABC'))
+   fenotips <- sort(fenotips, decreasing = TRUE)
+   barplot(fenotips, col = MetBrewer::met.brewer(palette, 8, direction = -1),
+           names.arg = c('A-B-C-', 'A-B-cc', 'A-bbC-', 'aaB-C-',
+                         'A-bbcc', 'aaB-cc', 'aabbC-', 'aabbcc'),
+           las = 2,
+           ylab = 'Frecuencia esperada',
+           main = paste('Proporciones', paste0(fenotips, collapse = ':')))
+   mtext('Clases fenotípicas', side = 1, line = 4.5)
 }
