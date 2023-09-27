@@ -91,7 +91,7 @@ phenotype <- function(x, map = 'dihybrid'){
    # upper case meaning "dominant" and lower case, "recessive".
    if (is.matrix(x)) {
       # In case x is the output of cross(), main intended use.
-      z <- lapply(strsplit(x, '[, ]'), diploid)
+      z <- suppressWarnings(lapply(strsplit(x, '[, ]'), diploid))
    } else if (all(sapply(x, class) == 'diploid')) {
       z <- x
    } else if (class(x) == 'diploid') {
@@ -117,7 +117,6 @@ phenotype <- function(x, map = 'dihybrid'){
       f[f == 2] <- 3
    } else if (map == 'double.dominant.recessive') {
       f[f == 1] <- 3
-      f[f == 2] <- 3
       f[f == 0] <- 3
    }
    return(structure(f, dim = dim(x)))
@@ -161,5 +160,5 @@ histo <- function(x, map = 'dihybrid', palette = 'Egypt') {
    F <- as.vector(table(fenotips))
    barplot(F, col = MetBrewer::met.brewer(palette, max(fenotips), direction = 1),
            xlab = 'Phenotypes', ylab = 'Expected frequency',
-           main = paste('Proportions', paste0(F, collapse = ':')))
+           main = paste('Proportions', paste0(sort(F, decreasing = TRUE), collapse = ':')))
 }
