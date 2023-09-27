@@ -16,9 +16,9 @@ diploid <- function(x, chr = 1:length(x), pos = rep(1, length(x))){
          }
       } else if (all(sapply(x, nchar) == 2)) {
          x <- sapply(x, strsplit, '')
-         warning('Interpreting input as genotypes from >2 loci.')
+         warning('Interpreting input as genotypes from one or more loci.')
       } else {
-         error('Wrong input. Use a list of length-two vectors for genotypes in one or more loci.')
+         stop('Wrong input. Use a list of length-two vectors for genotypes in one or more loci.')
       }
    } else if (is.list(x) && all(sapply(x, length) == 2)) {
       x <- lapply(x, as.character)
@@ -48,6 +48,7 @@ meiosis.diploid <- function(x) {
 }
 
 fusion <- function(gamete1, gamete2) {
+   # gametes are character vectors, with genes assumed in same order!
    stopifnot(length(gamete1) == length(gamete2))
    stopifnot(is.character(gamete1))
    stopifnot(is.character(gamete2))
@@ -56,7 +57,12 @@ fusion <- function(gamete1, gamete2) {
    return(zigot)
 }
 
-cross <- function(mum, dad) {
+is.diploid <- function(x) {
+   class(x) == 'diploid'
+}
+
+'*.diploid' <- function(mum, dad) {
+   stopifnot(is.diploid(mum) && is.diploid(dad))
    common.genes   <- intersect(names(mum), names(dad))
    stopifnot(length(common.genes) > 0)
    mum <- diploid(mum[common.genes])
@@ -80,7 +86,7 @@ cross <- function(mum, dad) {
    return(punnet)
 }
 
-fenotip <- function(x, map = 'dihibrid'){
+phenotype <- function(x, map = 'dihybrid'){
    # Assumes every gene uses one different letter, with
    # upper case meaning "dominant" and lower case, "recessive".
    if (is.matrix(x)) {
@@ -91,12 +97,69 @@ fenotip <- function(x, map = 'dihibrid'){
    } else if (class(x) == 'diploid') {
       z <- list(x)
    } else stop('Wrong input.')
+   # Translates genotypes to numbers.
    f <- sapply(z, function(y) {
       sum(sapply(y, function(w) length(grep(paste(w, collapse = '|'), LETTERS))) * 2^(0:(length(y)-1)))
    })
-   if (map == 'dihibrid') {
-      return(structure(f, dim = dim(x)))
-   } else if (mapp == 'simple.recesiva') {
-
+   map <- match.arg(map, c('dihybrid','simple.recessive','simple.dominant',
+                           'double.recessive','double.dominant','double.dominant.recessive'))
+   if (map == 'dihybrid') {
+      f <- f
+   } else if (map == 'simple.recessive') {
+      f[f == 2] <- 0
+   } else if (map == 'simple.dominant') {
+      f[f == 1] <- 3
+   } else if (map == 'double.recessive') {
+      f[f == 1] <- 0
+      f[f == 2] <- 0
+   } else if (map == 'double.dominant') {
+      f[f == 1] <- 3
+      f[f == 2] <- 3
+   } else if (map == 'double.dominant.recessive') {
+      f[f == 1] <- 3
+      f[f == 2] <- 3
+      f[f == 0] <- 3
    }
+   return(structure(f, dim = dim(x)))
+}
+
+punnet <- function(x, palette = 'Egypt', map = 'dihybrid') {
+   stopifnot(is.matrix(x))
+   stopifnot(is.character(x))
+   Map <- match.arg(map, c('dihybrid', 'simple.recessive', 'simple.dominant',
+                           'double.recessive', 'double.dominant', 'double.dominant.recessive'))
+   n <- dim(x)[1]
+   m <- dim(x)[2]
+   Genotips <- x
+   Fenotips <- phenotype(x, map = Map) + 1
+   par(mar = c(1, 6, 6, 1))
+   image(x = 1:m, y = 1:n, z = t(Fenotips[n:1,]),
+         col = MetBrewer::met.brewer(palette, max(Fenotips), direction = 1),
+         axes = FALSE, xlab = '', ylab = '')
+   axis(2, at = seq(from = 0.5, to = 0.5 + n, by = 1),
+        labels = FALSE)
+   axis(2, at = 1:n, tick = FALSE,
+        labels = row.names(Genotips)[n:1], cex.axis = 2, las = 2)
+   axis(3, at = seq(from = 0.5, to = 0.5 + m, by = 1),
+        labels = FALSE)
+   axis(3, at = 1:m, tick = FALSE,
+        labels = colnames(Genotips), cex.axis = 2)
+   abline(h = seq(from = 0.5, to = 0.5 + m, by = 1))
+   abline(v = seq(from = 0.5, to = 0.5 + n, by = 1))
+   text(x = rep(1:m, each = n), y = rep(n:1, m), labels = Genotips, cex = 32/(m * m))
+   mtext('First gamete', side = 2, line = 4, cex = 2)
+   mtext('Second gamete', side = 3, line = 4, cex = 2)
+   par(mar = c(5, 4, 4, 2))
+}
+
+histo <- function(x, map = 'dihybrid', palette = 'Egypt') {
+   stopifnot(is.matrix(x))
+   stopifnot(is.character(x))
+   Map <- match.arg(map, c('dihybrid', 'simple.recessive', 'simple.dominant',
+                           'double.recessive', 'double.dominant', 'double.dominant.recessive'))
+   fenotips <- suppressWarnings(phenotype(x, map = Map)) + 1
+   F <- as.vector(table(fenotips))
+   barplot(F, col = MetBrewer::met.brewer(palette, max(fenotips), direction = 1),
+           xlab = 'Phenotypes', ylab = 'Expected frequency',
+           main = paste('Proportions', paste0(F, collapse = ':')))
 }
