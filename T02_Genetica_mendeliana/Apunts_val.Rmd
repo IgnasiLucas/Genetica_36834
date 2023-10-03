@@ -1,0 +1,196 @@
+---
+title: "Apunts complementaris de genetètica mendeliana"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+output: pdf_document
+bibliography: ../references.bib
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage[catalan]{babel}
+---
+
+## Probabilitat
+El concepte clàssic de probabilitat consisteix en una fracció, el numerador de la qual seria el nombre d'oportunitats de què es produïsca un cert event, i el denominador, el nombre total d'oportunitats de què l'event es produïsca o no. Aquesta fracció seria la probabilitat de l'event, sempre que les *oportunitats* que estem comptant siguen *equiprobables*. Aquesta noció de **probabilitat** és adequada en moltes situacions, però no és l'única.
+
+Existeix també la **interpretació subjectiva** de probabilitat: el grau de certesa o confiança amb què creiem alguna cosa. Aquesta és la interpretació pròpia de l'estadística Bayesiana. Sota aquesta interpretació té sentit assignar probabilitats a les hipòtesis, per exemple.
+
+Tant una interpretació com l'altra (n'hi ha d'altres) poden ser formalitzades mitjançant una mesura numèrica entre 0 i 1, on la probabilitat 0 indica impossibilitat i la probabilitat 1 indica certesa absoluta. Matemàticament, la probabilitat és una *funció* $P()$ definida sobre qualsevol subconjunt dels events considerats possibles, la totalitat dels quals es representa amb la llegra grega $\Omega$. Aquesta funció té les propietats següents:
+
+\begin{align*}
+P(A) \geq& 0 \qquad \text{per a tot subconjunt $A$ d'} \Omega\\
+P(\Omega) =& 1 \\
+P(A \cup B) =& P(A) + P(B) \qquad \text{per a tot $A$ i $B$ mútuament excloients.}
+\end{align*}
+
+La *probabilitat condicional* es calcula així:
+
+\begin{align*}
+P(A|B) =& \frac{P(A\cap B)}{P(B)} \qquad \text{Sempre que } P(B) > 0.
+\end{align*}
+
+Per exemple, la probabilitat de què siga heterozigot (**Aa**) un individu de fenotip dominant (pésol groc, per exemple), els progenitors del qual eren ambdós heterozigots per a l'únic gen que determina aquest fenotip es pot calcular així:
+
+\begin{align*}
+P(\text{heterozigot}|\text{dominant}) =& \frac{P(\text{heterozigot} \cap \text{dominant})}{P(\text{dominant})}\\
+P(\text{heterozigot}|\text{dominant}) =& \frac{\frac{1}{2}}{\frac{3}{4}} = \frac{2}{3}
+\end{align*}
+
+(Com tots els heterozigots expressen el fenotip dominant, la probabilitat de ser alhora heterozigot i de fenotip dominant és igual a la probabilitat de ser heterozigot).
+
+Reorganitzant la fòrmula de la probabilitat condicional, obtenim una expressió d'una altra propietat important de les probabilitats:
+
+\begin{align*}
+P(A|B)\cdot P(B) =& P(A \cap B)
+\end{align*}
+
+La probabilitat de què es produïsquen dos event $A$ i $B$ seria igual al producte de les seues probabilitats ($P(A\cap B) = P(A)\cdot P(B)$) si i només si els dos events són independents. És a dir, si $P(A|B) = P(A)$.
+
+És fàcil demostrar que $P(A|B)\cdot P(B) = P(B|A)\cdot P(A)$, la qual cosa ens porta a una altra expressió de la probabilitat condicional, coneguda com el *teorema de Bayes*:
+
+\begin{align*}
+P(A|B) =& \frac{P(B|A)\cdot P(A)}{P(B)}
+\end{align*}
+
+## Quadre de Punnet
+
+Una taula de doble entrada, coneguda com el *quadre de Punnet* ens permet mostrar i calcular les probabilitats de totes les combinacions dels resultats possibles de dos processos *independents*. Per exemple: quins al·lels transmet el pare i quins, la mare. O dit d'una altra manera, quin dels tipus gamètics possibles de cada progenitor es combinen per formar el zigot. En un creuament dihíbrid, **Aa Bb** $\times$ **Aa Bb**, els descendents poden resultar de les 16 combinacions següents:
+
+```{r dihibrid, echo=FALSE, fig.width=10, fig.height=5}
+   punnet <- matrix(c(3, 2, 1, 0, 3, 3, 1, 1, 3, 2, 3, 2, 3, 3, 3, 3),
+                    ncol = 4, byrow = FALSE)
+   par(mar = c(1, 6, 6, 1), mfrow = c(1, 2))
+   image(x = 1:4, y = 1:4, z = punnet,
+         col = MetBrewer::met.brewer('Egypt', 4, direction = 1),
+         axes = FALSE, xlab = '', ylab = '')
+   axis(2, at = c(0.5, 1.5, 2.5, 3.5, 4.5), labels = c('', '', '', '', ''))
+   axis(2, at = c(1, 2, 3, 4), tick = FALSE,
+        labels = c('ab', 'aB', 'Ab', 'AB'), cex.axis = 2, las = 2)
+   axis(3, at = c(0.5, 1.5, 2.5, 3.5, 4.5), labels = c('', '', '', '', ''))
+   axis(3, at = c(1, 2, 3, 4), tick = FALSE,
+        labels = c('AB', 'Ab', 'aB', 'ab'), cex.axis = 2)
+   abline(h = c(0.5, 1.5, 2.5, 3.5, 4.5))
+   abline(v = c(0.5, 1.5, 2.5, 3.5, 4.5))
+   text(x = c(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4),
+        y = c(1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4),
+        labels = c('aA bB', 'aA BB', 'AA bB', 'AA BB',
+                   'aA bb', 'aA Bb', 'AA bb', 'AA Bb',
+                   'aa bB', 'aa BB', 'Aa bB', 'Aa BB',
+                   'aa bb', 'aa Bb', 'Aa bb', 'Aa Bb'),
+        cex = 1.5)
+   mtext('Gàmeta masculí', side = 2, line = 4, cex = 2)
+   mtext('Gàmeta femení',  side = 3, line = 4, cex = 2)
+
+   par(mar = c(5, 4, 4, 2))
+   fenotips <- as.vector(table(punnet))
+   fenotips <- sort(fenotips, decreasing = TRUE)
+   barplot(fenotips, col = MetBrewer::met.brewer('Egypt', 4, direction = -1),
+           names.arg = c('A-B-', 'A-bb', 'aaB-', 'aabb'),
+           xlab = 'Classes fenotípiques', ylab = 'Frequència esperada',
+           main = paste('Proporcions', paste0(fenotips, collapse = ':')))
+
+   punnet <- matrix(c(8, 7, 6, 5, 4, 3, 2, 1, 8, 8, 6, 5, 6, 5, 2, 2,
+                      8, 7, 8, 5, 7, 3, 5, 3, 8, 7, 6, 8, 4, 7, 6, 4,
+                      8, 8, 8, 5, 8, 5, 5, 5, 8, 8, 6, 8, 6, 8, 6, 6,
+                      8, 7, 8, 8, 7, 7, 8, 7, 8, 8, 8, 8, 8, 8, 8, 8),
+                    ncol = 8, byrow = FALSE)
+   par(mar = c(1, 6, 6, 1), mfrow = c(1, 2))
+   image(x = 1:8, y = 1:8, z = punnet,
+         col = MetBrewer::met.brewer('Egypt', 8, direction = 1),
+         axes = FALSE, xlab = '', ylab = '')
+   axis(2, at = c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5), labels = rep('', 9))
+   axis(2, at = c(1, 2, 3, 4, 5, 6, 7, 8), tick = FALSE,
+        labels = c('abc', 'abC', 'aBc', 'Abc', 'aBC', 'AbC', 'ABc', 'ABC'), cex.axis = 1, las = 2)
+   axis(3, at = c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5), labels = rep('', 9))
+   axis(3, at = c(1, 2, 3, 4, 5, 6, 7, 8), tick = FALSE,
+        labels = c('ABC', 'ABc', 'AbC', 'aBC', 'Abc', 'aBc', 'abC', 'abc'), cex.axis = 1, las = 2)
+   abline(h = c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5))
+   abline(v = c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5))
+   mtext('Gàmeta masculí', side = 2, line = 4, cex = 2)
+   mtext('Gàmeta femení',  side = 3, line = 4, cex = 2)
+
+   par(mar = c(6, 4, 4, 2))
+   fenotips <- as.vector(table(punnet))
+   fenotips <- sort(fenotips, decreasing = TRUE)
+   barplot(fenotips, col = MetBrewer::met.brewer('Egypt', 8, direction = -1),
+           names.arg = c('A-B-C-', 'A-B-cc', 'A-bbC-', 'aaB-C-',
+                         'A-bbcc', 'aaB-cc', 'aabbC-', 'aabbcc'),
+           las = 2,
+           ylab = 'Frequència esperada',
+           main = paste('Proporcions', paste0(fenotips, collapse = ':')))
+   mtext('Classs fenotípiques', side = 1, line = 4.5)
+```
+
+
+Les $2^3 \times 2^3 = 64$ combinacions possibles d'un creuament trihíbrid (**Aa Bb Cc** $\times$ **Aa Bb Cc**) poden representar-se en un quadre de $8 \times 8$ cel·les, com un tauler d'escacs. Però els quadres de PUnnet són molt redundants, perquè dediquen una casella a cada genotip possible, distingint fins i tot els heterozigots en funció del progenitor del qual procedeix cada al·lel (**Aa BB** i **aA BB** tenen caselles diferents, encara que normalment es consideren el mateix genotip). Existeix una altra manera més compacta de representar els possibles resultats d'un creuament di- o trihíbrid i de calcular-ne les probabilitats: els diagrames ramificats.
+
+## Diagrama ramificat
+Els diagrames ramificats representen els diferents processos independents com una seqüència de decisions. En el diagrama de la figura inferior, cada un dels tres gens *no lligats* (amb segregació independent) pot determinar un fenotip dominant o un de recessiu. Com es tracta de la descendència d'un creuament dihíbrid, en cada un dels gens la probabilitat de què l'embrió siga de fenotip dominant és $\frac{3}{4}$, i la probabilitat de què siga de fenotip recessiu és d'$\frac{1}{4}$. La probabilitat (o freqüència esperada) d'un fenotip total, com per exemple **A_ B_ cc** (és a dir, dominant per a *A* i *B*, i recessiu només per a *C*) es calcula multiplicant les probabilitat de les branques que ens condueixen a eixe fenotip: $\frac{3}{4}\times \frac{3}{4}\times \frac{1}{4} = \frac{3\times 3\times 1}{4\times 4\times 4}=\frac{9}{64}$.
+
+```{r arbre, fig.width=10, fig.height=5, echo=FALSE, message=FALSE}
+par(mar = c(0,0,0,0))
+plot(c(-1, 16), c(0, 16), type = 'n', axes = FALSE, xlab = '', ylab = '')
+text(
+   x = c(1, 1, 4, 4, 4, 4, 7, 7, 7, 7, 7, 7, 7, 7),
+   y = c(4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15),
+   labels = c('aa', 'A_', 'bb', 'B_', 'bb', 'B_', 'cc',
+              'C_', 'cc', 'C_', 'cc', 'C_', 'cc', 'C_'),
+   cex = 1.5, pos = 4
+)
+text(x = 9,
+     y = c(1, 3, 5, 7, 9, 11, 13, 15),
+     labels = c('  1/64  aa bb cc',
+                '  3/64  aa bb C_',
+                '  3/64  aa B_ cc',
+                '  9/64  aa B_ C_',
+                '  3/64  A_ bb cc',
+                '  9/64  A_ bb C_',
+                '  9/64  A_ B_ cc',
+                '27/64 A_ B_ C_'),
+     cex = 1.5, pos = 4)
+arrows(
+   x0 = c(-1, -1, 2.2, 2.2, 2.2, 2.2, 5.2, 5.2, 5.2, 5.2, 5.2, 5.2, 5.2, 5.2),
+   y0 = c(8, 8, 4, 4, 12, 12, 2, 2, 6, 6, 10, 10, 14, 14),
+   x1 = c(1, 1, 4, 4, 4, 4, 7, 7, 7, 7, 7, 7, 7, 7),
+   y1 = c(4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15),
+   length = 0.15
+)
+text(x = c(-0.5, -0.5, 2.5, 2.5, 2.5, 2.5, 6, 6, 6, 6, 6, 6, 6, 6),
+     y = c(6, 10, 3, 5, 11, 13, 1, 3, 5, 7, 9, 11, 13, 15),
+     labels = c('1/4','3/4'))
+```
+
+## Graus de llibertat
+Abans d'introduir el test de la $\chi^2$, és convenient aclarir algunes confusions comunes respecte dels **graus de llibertat**. El concepte procedeix de l'àlgebra i s'usa també en física per designar un nombre de dimensions: en quantes dimensions es pot moure un objecte, quantes dimensions té el subespai definit per un nombre de vectors, etc.
+
+En estadística, els graus de llibertat representen la quantitat d'informació amb què es calcula un **estadístic**. Un estadístic és qualsevol resultat d'aplicar una fòrmula a unes dades. Per exemple, si les meues dades són el nombre de pésols verds i el nombre de pésols grocs que ha produït una planta, tinc dos números, $x_1$ i $x_2$. Qualsevol operació que faça amb ells la realitzaré amb dos graus de llibertat, en el sentit de què qualsevol dels dos números (com a *dades* o *variables aleatòries* que  són) podria haber sigut diferent.
+
+Aquesta obvietat no sembla tenir cap importància en el càlcul d'un estadístic qualsevol. Per exemple, la proporció de pésols verds, $p_1 = \frac{x_1}{x_1 + x_2}$ la calcule amb dos graus de llibertat. Tanmateix, quan l'objectiu de calcular un estadístic és estimar un **paràmetre** poblacional, aleshores pot ser important revisar i conéixer exactament quants graus de llibertat hem utilitzat. Seguint amb l'exemple, la proporció de pésols verds és un estimador del paràmetre $p$ de la distribució binomial: $\hat{p}=\frac{x}{n}$, on $n$ és l'*altre paràmetre* de la distribució binomial, a saber, el nombre d'*intents* o número total d'experiments de Bernoulli. En el nostre cas, $n=x_1+x_2$ és el nombre total de pésols que hem comptat i classificat. Resulta que si pretenem utilitzar $p_1 = \frac{x_1}{x_1+x_2}$ com un estimador del paràmetre $p$ de la binomial $B(p,n)$, aleshores $\hat{p}=p_1$ està calculat amb només un grau de llibertat, perquè en fixar la mida de la mostra, $n$, ja no és cert que tant $x_1$ com $x_2$ podrien haver pres qualsevol altre valor.
+
+En general, quan un estadístic pretén estimar un paràmetre de la població d'on s'ha tret la mostra, aleshores el nombre de graus de llibertat amb què es calcula l'estadístic és igual al nombre de dades menys el nombre de paràmetres addicionals que hem hagut d'estimar amb les mateixes dades.
+
+I açò, per a què serveix? La veritat és que en molts casos ens dóna igual saber o ignorar els graus de llibertat utilitzats en estimar una mitjana, una variança, etc. Però en algunes situacions sí que importa. Per exemple, a l'hora de realitzar un test de la $\chi^2$.
+
+## Test de la $\chi^2$
+Utilitzem el test de la $\chi^2$ per determinar si existeix una desviació estadística significativa entre les freqüències esperades i les freqüències observades de dues o més categories en què classifiquem els elements d'una mostra. Per a tal fi, es calcula l'estadístic següent:
+
+\begin{align*}
+X &= \sum_{i=1}^n \frac{(O_i - E_i)^2}{E_i}
+\end{align*}
+
+On $O_i$ és el valor observat de freqüència **absoluta** de la categoria $i$ (nombre de casos, no proporció!); i $E_i$ és el nombre esperat de casos de la categoria $i$. L'estadístic $X$ és més gran com majors són les diferències entre els valors observats i els esperats. Aquest estadístic ens permet comprovar si les desviacions són significativament majors que les esperades sota la hipòtesi de les freqüències esperades. Sempre què els nombres $O_i$ són suficientment grans (almenys majors o iguals a 5) aleshores $X$ hauria de tenir una distribució $\chi^2$ sota la hipòtesi nul·la representada per les freqüències esperades.
+
+Ara bé, la distribució $\chi^2$ no és una única distribució, sinó una família d'elles, cada una caracteritzada per un valor (natural) del **paràmetre** $k$:
+
+```{r chisq, echo=FALSE}
+library(MetBrewer)
+x <- seq(from = 0, to = 8, by = 0.01)
+y <- sapply(1:5, function(z) dchisq(x, z))
+p <- met.brewer('Egypt', 5)
+plot(c(0,8), c(0, 0.5), type = 'n', xlab = 'X', ylab = '',
+     main = expression(paste('Densitat de probabilitat ', chi[k]^2)))
+for (z in 1:5) {
+   lines(x, y[,z], col = p[z], lwd = 2)
+}
+legend(6, 0.45, paste('k', 1:5, sep = '='), col = p, lwd = 2)
+```
+
+La distribució $\chi^2_k$ amb què cal comparar el nostre estadístic $X$ és aquella el paràmetre $k$ de la qual coincideix amb el nombre de graus de llibertat amb què hem calculat $X$. Per motius pràctics, al paràmetre $k$ de la distribució $\chi^2_k$ se l'anomena *graus de llibertat*. Però és important adonar-se'n de què $k$ és un paràmetre d'una distribució teòrica, un concepte molt diferent del que coneixem com els "graus de llibertat" d'un estadístic.
