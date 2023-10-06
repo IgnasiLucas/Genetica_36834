@@ -1,0 +1,10 @@
+[FILE_INFO]{
+   col_locus 1
+   col_allele1 2
+   col_allele2 3
+   col_dominance 4
+}
+
+# Locus Allele1 Allele2 Dominance
+    1      1       2       0
+    2      1       2       0    

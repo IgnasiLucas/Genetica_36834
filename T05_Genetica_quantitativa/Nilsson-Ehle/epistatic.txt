@@ -1,0 +1,17 @@
+[FILE_INFO]{
+   col_genotype 1
+   col_epistatic_value 2
+#  col_genotypic_value
+#  col_fitness_factor
+}
+
+# Genotype Epistatic_value
+ {11 11}         0
+ {11 12}         0
+ {11 22}         0
+ {12 11}         0
+ {12 12}         0
+ {12 22}         0
+ {22 11}         0
+ {22 12}         0
+ {22 22}         0
