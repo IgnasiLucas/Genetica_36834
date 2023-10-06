@@ -1,0 +1,11 @@
+[FILE_INFO]{
+   col_locus 1
+   col_allele 2
+   col_allelic_value 3
+   col_ini_freq 4
+}
+#Locus Allele Value IniFreq
+1	1	14.0	0.5
+1	2	12.5	0.5
+2	1	16.5	0.5
+2	2	14.5	0.5

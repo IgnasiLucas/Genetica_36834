@@ -14,212 +14,80 @@ knitr::opts_chunk$set(echo = FALSE)
 El 28 de febrero de 1908, el estadístico G. Udny Yule, discípulo de Pearson y miembro
 de la escuela biométrica (crítica con el Mendelismo), dirigió un comentario a Reginald C.
 Punnett, quien acababa de presentar su trabajo "Mendelismo en relación a la enfermedad"
-a la *Royal Society of Medicine*: "El autor ha dicho que la braquidactilia es dominante.
-Con el paso del tiempo, uno esperaría entonces que, en la ausencia de factores que lo
-contraresten, encontráramos tres personas con braquidactilia por cada persona normal,
-pero esto no es así" [@Punnet1908]. Sin duda, la audiencia de Punnett tenía dificultades
-para aceptar los principios de la herencia Mendeliana como un fundamento válido para una
-teoría general de la herencia, porque muchos caracteres, incluyendo enfermedades graves
-de la época, no se heredaban de forma Mendeliana. Además del escepticismo motivado por
-la existencia de caracteres cuantitativos, la pregunta de Yule revela errores conceptuales
-que dificultaban la comprensión del Mendelismo.
+a la *Royal Society of Medicine*, en Londres: "El autor ha dicho que la braquidactilia
+es dominante. Con el paso del tiempo, uno esperaría entonces que, en la ausencia
+de factores que lo contraresten, encontráramos tres personas con braquidactilia 
+por cada persona normal, pero esto no es así" [@Punnett1908]. Punnet había mostrado
+varios ejemplos de caracteres en plantas, animales y humanos con patrones de herencia
+Mendeliana, pero se encontraba en su audiencia con una razonable resistencia a
+aceptar los principios de Mendel como un fundamento general de la herencia de
+cualquier carácter. Al fin y al cabo, sólo se observaban proporciones Mendelianas
+en algunos casos de hibridación. Además, la pregunta de Yule revelaba una laguna
+importante en el conocimiento, no solo por parte de Yule, sino también por parte
+del mismo Punnett: ¿qué implicaciones tienen los principios de la herencia
+Mendeliana para la composición genética de una población? El concepto de
+*dominancia*, por ejemplo, parecía sugerir que con el tiempo el carácter dominante
+debía establecerse como mayoritario. Tal vez el hecho de que muchos caracteres
+recesivos sean extremadamente raros contribuyera a este mito.
 
+Lo cierto es que @Yule1902 se había interesado anteriormente por comprender
+las implicaciones de la herencia Mendeliana para una población con apareamiento
+aleatorio y sabía perfectamente que si se fundaba una población con el 50% de
+indivíduos dominantes *puros*, **AA**, y el 50% recesivos, **aa**, en las generaciones
+posteriores a la segunda habría siempre un 25% de dominantes *puros* **AA**,
+un 50% de dominantes *híbridos* (heterocigotos, **Aa**), y un 25% de recesivos **aa**.
+Tal vez el hecho de haber manejado ejemplos con sólo estas frecuencias genotípicas
+motivaron su interpretación errónea de la braquidactilia.
 
+El caso es que, Punnett no respondió exactamente a lo que se le planteaba y a su
+regreso a Cambridge consultó a uno de los matemáticos más brillantes de la época:
+Godfrey Harold Hardy. La cuestión era cómo iban a cambiar las frecuencias de los
+tres genotipos posibles de un carácter Mendeliano en una población con reproducción
+aleatoria.
 
-## Desafíos intelectuales en 1908
+## La solución de G.H. Hardy
 
-- ¿Cómo cambian las frecuencias *genotípicas* con el tiempo?
-   - De cruces controlados a reproducción aleatoria.
-- ¿Qué importancia tiene la *dominancia* en ese cambio?
-  - Ninguna!
-- ¿Cómo explicar los caracteres cuantitativos?
-   - (Tema 5)
+@Hardy1908 no tardó en demostrar que los principios de la herencia Mendeliana no
+daban ningún motivo para pensar que un carácter dominante debiera aumentar su
+frecuencia, ni que uno recesivo debiera disminuirla con el tiempo. Su razonamiento
+fue el siguiente. Supongamos que en la población existen los genotipos **AA**,
+**Aa** y **aa** en proporciones $P$, $H$ y $Q$. De acuerdo con la herencia
+Mendeliana los heterocigotos producen la mitad de sus gametos de cada tipo, de
+manera que la reproducción aleatoria, que consistiría en reunir dos gametos al
+azar, produciría la combinación **AA** con frecuencia $P'=\left(P+\frac{H}{2}\right)^2$,
+la combinación **Aa** con frecuencia
+$H'=2\left(P+\frac{H}{2}\right)\left(Q+\frac{H}{2}\right)$, y la combinación **aa**
+con frecuencia $Q'=\left(Q+\frac{H}{2}\right)^2$. Siendo esto así, la única manera
+de que la distribución de genotipos se mantenga constante és que $P'=P$, $H'=H$ y
+$Q'=Q$. Cualquiera de estas ecuaciones, junto con la condición de que $P+H+Q=1$,
+nos conducen a la expresión de la condición necesaria y suficiente para que las
+frecuencias genotípicas no cambien con el tiempo: $H^2 = 4PQ$.
 
-## ¿Cambian las frecuencias genotípicas?
+Esta relación entre las frecuencias genotípicas, $H^2=4PQ$, no es necesaria en la
+primera generación. Sin embargo, es evidente que después de una única generación
+de reproducción aleatoria, cuando la distribución de genotipos es
+$P':H':Q' = \left(P+\frac{H}{2}\right)^2:2\left(P+\frac{H}{2}\right)\left(Q+\frac{H}{2}\right):\left(Q + \frac{H}{Q}\right)^2$, entonces sí se cumple que $H'^2 = 4P'Q'$.
+Por lo tanto, a partir de ese momento, la distribución de genotipos sería *estable*,
+es decir no cambiaría con el tiempo, excepto por las desviaciones propias de una
+distribución multinomial, que son pequeñas en poblaciones suficientemente grandes.
 
-- $P$: Frecuencia del genotipo **AA**.
-- $H$: Frecuencia del genotipo **Aa**.
-- $Q$: Frecuencia del genotipo **aa**.
+## El equilibrio de Hardy-Weinberg y frecuencias alélicas
+Puede llamar la atención que la *ley* de Hardy-Weinberg se enunciara originalmente
+sin hacer ninguna referencia a la regla del cuadrado del binomio,
+$(p + q)^2 = p^2 + 2pq + q^2$, donde $p$ y $q$ son las **frecuencias alélicas**
+de **A** y **a**, respectivamente.
+Con el tiempo, el concepto de frecuencia alélica cobró importancia, y actualmente
+parece necesariamente vinculado al equilibrio de Hardy-Weinberg. Sin duda, expresar
+las frecuencias genotípicas del equilibrio en función de las frecuencias alélicas
+añade claridad al asunto y ayuda a transmitir la idea de que lo realmente importante,
+lo que subyace a la constancia de la distribución de genotipos, es la constancia de
+las frecuencias alélicas.
 
-Con reproducción aleatoria los cigotos se forman con las probabilidades:
+$$P' = p^2;\qquad H' = 2pq;\qquad Q' = q^2$$
 
-```{r arbre, echo=FALSE, fig.height = 3}
-par(mar=c(0,0,0,0))
-plot(c(0,12), c(0, 8), type = 'n', axes = FALSE, xlab = '', ylab = '')
-arrows(c(1,1,4,4,4,4), c(4,4,2,2,6,6), c(2.7,2.7,6,6,6,6), c(2.5,5.5,1,3,5,7),
-       length = 0.1, code = 2)
-text(c(3,3,7,7,7,7,10,10,10,10),
-     c(2,6,1,3,5,7,1,3,5,7),
-     labels = c('a','A','a','A','a','A', expression((Q+frac(H,2))^2*'   aa'),
-                expression((Q+frac(H,2))(P+frac(H,2))*'   aA'),
-                expression((P+frac(H,2))(Q+frac(H,2))*'   Aa'),
-                expression((P+frac(H,2))^2*'   AA')))
-text(c(1,1,5,5,5,5), c(3,5,1,3,5,7),
-     labels = c(expression(Q+frac(H,2)), expression(P+frac(H,2)),
-                expression(Q+frac(H,2)), expression(P+frac(H,2)),
-                expression(Q+frac(H,2)), expression(P+frac(H,2))),
-     cex = 0.8)
-```
-
-## ¿Cambian las frecuencias genotípicas? {.smaller}
-
-Con reproducción aleatoria, las frecuencias de los gametos **A** y **a**
-son $P+\frac{H}{2}$ y $Q+\frac{H}{2}$, respectivamente. Tambien podemos verlo así:
-
-```{r punnet, fig.width=5.5, fig.height=5}
-par(mar=c(0,2,2,0))
-plot(c(0, 10), c(0, 9), axes = FALSE, xlab = '', ylab = '', type = 'n')
-segments(c(0,0,0,0,2,6), c(3,7,9,3,3,3),
-         c(6,6,6,0,2,6), c(3,7,9,9,9,9))
-axis(2, at = c(5, 8), labels = c('a', 'A'), tick = FALSE, las = 2)
-axis(3, at = c(1, 4), labels = c('A', 'a'), tick = FALSE)
-d <- 0.025
-arrows(c(0,2+d,7,7), c(2,2,3,7+d), c(2-d,6,7,7), c(2,2,7-d,9),
-       code = 3, length=0.1)
-text(c(1,4,8,8), c(1,1,5,8),
-     labels = c(expression(P+frac(H,2)), 
-                expression(Q+frac(H,2)),
-                expression(Q+frac(H,2)),
-                expression(P+frac(H,2))))
-text(c(1,1,4,4), c(6,8.5,6,8.5),
-     labels = c('aA', 'AA', 'aa', 'Aa'))
-text(c(1,1,4,4), c(5,7.5,5,7.5),
-     labels = c(expression((Q+frac(H,2))(P+frac(H,2))),
-                expression((P+frac(H,2))^2),
-                expression((Q+frac(H,2))^2),
-                expression((P+frac(H,2))(Q+frac(H,2)))))
-```
-
-## ¿Cambian las frecuencias genotípicas? {.smaller}
-
-```{r cruces}
-library(kableExtra)
-creuaments <- data.frame(
-   pare = c('AA', 'AA', 'AA', 'Aa', 'Aa', 'Aa', 'aa', 'aa', 'aa', 'Total:'),
-   mare = c('AA', 'Aa', 'aa', 'AA', 'Aa', 'aa', 'AA', 'Aa', 'aa', ''),
-   freq = c("$P^2$", "$PH$", "$PQ$",
-            "$PH$", "$H^2$", "$QH$",
-            "$PQ$", "$QH$", "$Q^2$", "$(P+H+Q)^2=1$"),
-   AA = c("$1$", "$\\frac{1}{2}$", "$0$", "$\\frac{1}{2}$", "$\\frac{1}{4}$", "$0$", "$0$", "$0$", "$0$", "$P'$"),
-   Aa = c("$0$", "$\\frac{1}{2}$", "$1$", "$\\frac{1}{2}$", "$\\frac{1}{2}$", "$\\frac{1}{2}$", "$1$", "$\\frac{1}{2}$", "$0$", "$H'$"),
-   aa = c("$0$", "$0$", "$0$", "$0$", "$\\frac{1}{4}$", "$\\frac{1}{2}$", "$0$", "$\\frac{1}{2}$", "$1$", "$Q'$")
-)
-kable(creuaments, col.names = c('Padre', 'Madre', 'Frecuencia', 'AA', 'Aa', 'aa')) %>% kable_styling()
-```
-
-$P' = \left(P + \frac{H}{2}\right)^2, \qquad 
-H' = 2\left(P + \frac{H}{2}\right)\left(Q + \frac{H}{2}\right), \qquad
-Q' = \left(Q + \frac{H}{2}\right)^2$
-
-## ¿Cambian las frecuencias genotípicas?
-
-Las frecuencias genotípicas después de una generación de reproducción
-aleatoria serían:
-
-$$P' = \left(P + \frac{H}{2}\right)^2$$
-
-$$H' = 2\cdot \left(P + \frac{H}{2}\right) \cdot \left( Q+\frac{H}{2} \right)$$
-
-$$Q' = \left(Q + \frac{H}{2}\right)^2$$
-
-@Hardy1908 demostró (ver Apéndice) que las frecuencias genotípicas se mantienen
-constantes si $H^2 = 4PQ$, lo cual es siempre cierto a partir de la segunda
-generación.
-
-## Equilibrio de Hardy-Weinberg
-
-Las frecuencias genotípicas se mantienen constantes en siempre que en una
-población diploide:
-
-1. La reproducción sea sexual y aleatoria (i.e., no hay consanguinidad).
-2. El genotipo no afecta la probabilidad de sobrevivir o reproducirse (i.e., no
-hay selección natural).
-3. La población es suficientemente grande (i.e., no hay deriva genética).
-4. No hay inmigración.
-
-## Frecuencias alélicas
-
-Hubiera sido más fácil definir estas dos variables:
-
-$$p = P + \frac{H}{2}$$
-
-$$q = Q + \frac{H}{2}$$
-
-Las frecuencias de los alelos **A** y **a**, respectivamente. Ahora, podemos
-expresar las frecuencias genotípicas después de la reproducción así:
-
-$$P' = p^2, \qquad H' = 2pq, \qquad Q' = q^2$$
-
-## Ejemplo {.smaller}
-
-<div style="float: left; width: 50%;">
-```{r MN}
-MN <- data.frame(
-   Fenotipo = c('MM', 'MN', 'NN', 'Total:'),
-   Genotipo = c("$L^ML^M$", "$L^ML^N$", "$L^NL^N$", ""),
-   Frecuencia = c(141, 262, 97, 500)
-)
-kable(MN) %>% kable_styling()
-```
-
-</div>
-
-<div style="float: right; width: 50%;">
-$$p = \frac{2\times 141 + 262}{2\times 500} = 0.544$$
-$$q = \frac{2\times 97 + 262}{2\times 500} = 0.456$$
-</div>
-
-
-## 
-
-
-## Apéndice
-
-Asumiendo reproducción aleatoria, habíamos deducido que las frecuencias
-genotípicas podían expresarse en función de las de la generación anterior así:
-
-$P' = \left(P + \frac{H}{2}\right)^2$
-
-$H' = 2\cdot \left(P + \frac{H}{2}\right) \cdot \left( Q+\frac{H}{2} \right)$
-
-$Q' = \left(Q + \frac{H}{2}\right)^2$
-
-Siguiendo el razonamiento de @Hardy1908, nos preguntamos bajo qué condiciones
-las frecuencias genotípicas no cambiarían, de manera que $P'=P$, $H'=H$ y 
-$Q'=Q$.
-
-## Apéndice {.smaller}
-La constancia de las frecuencias genotípicas implicaría lo siguiente:
-
-$H = 2\cdot \left(P + \frac{H}{2}\right) \cdot \left( Q+\frac{H}{2} \right)$
-
-$H = 2 \left( PQ + \frac{PH}{2} + \frac{QH}{2} + \frac{H^2}{4}\right)$
-
-$H = 2PQ + PH + QH + \frac{H^2}{2}$
-
-$H = H(P+Q)+2PQ + \frac{H^2}{2}$
-
-$H-H(P+Q)-2PQ = \frac{H^2}{2}$
-
-$H(1-P-Q) - 2PQ = \frac{H^2}{2}$
-
-$H^2 - 2PQ = \frac{H^2}{2} \qquad$   (Porque $P+H+Q=1$)
-
-$H^2-\frac{H^2}{2} = 2PQ \qquad \rightarrow \qquad H^2 = 4PQ$
-
-## Apéndice
-La condición $H^2=4PQ$ no tiene por qué darse en la primera generación, pero se
-demuestra que en la segunda sí se da, $H'^2 = 4P'Q'$, sea qual sea el valor de
-$P$, $H$ y $Q$ en la primera generación:
-
-$H'^2 = \left(2\left( P+\frac{H}{2}\right)\left( Q+\frac{H}{2}\right)\right)^2$
-
-$H'^2 = 4\left(P+\frac{H}{2}\right)^2\left( Q+\frac{H}{2}\right)^2$
-
-$H'^2 = 4P'^2Q'^2$
-
-Conclusión: no hay ningún motivo para pensar que la segregación de los alelos
-ni la dominancia hagan cambiar las frecuencias genotípicas, siempre que la
-reproducción sea aleatoria.
+Al fin y al cabo, el hecho de que durante cada generación los alelos que van a
+ser transmitidos a la siguiente sean *conservados* por parejas, aleatorias o no,
+en organismos diploides, es circunstancial: las *parejas* de alelos se destruyen
+en cada ciclo de reproducción para formar otras nuevas. 
 
 ## References
