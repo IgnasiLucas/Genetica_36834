@@ -1,0 +1,7 @@
+#!/bin/bash
+
+wget https://www2.unil.ch/popgen/softwares/quantinemo/files/quantinemo_linux.zip
+unzip quantinemo_linux.zip
+mv quantinemo_linux/quantinemo ./
+mv quantinemo_linux/quantinemo.pdf ./
+rm -r quantinemo_linux
