@@ -2,6 +2,9 @@
 
 wget https://www2.unil.ch/popgen/softwares/quantinemo/files/quantinemo_linux.zip
 unzip quantinemo_linux.zip
-mv quantinemo_linux/quantinemo ./
+if [ ! -d .local ]; then mkdir .local; fi
+if [ ! -d .local/bin ]; then mkdir .local/bin; fi
+mv quantinemo_linux/quantinemo .local/bin/
 mv quantinemo_linux/quantinemo.pdf ./
 rm -r quantinemo_linux
+rm quantinemo_linux.zip
