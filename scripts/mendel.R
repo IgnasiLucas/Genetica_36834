@@ -97,11 +97,11 @@ phenotype <- function(x, map = 'dihybrid'){
    } else if (class(x) == 'diploid') {
       z <- list(x)
    } else stop('Wrong input.')
-   # Translates genotypes to numbers.
+   # Translates genotypes to numbers: 
    f <- sapply(z, function(y) {
       sum(sapply(y, function(w) length(grep(paste(w, collapse = '|'), LETTERS))) * 2^(0:(length(y)-1)))
    })
-   map <- match.arg(map, c('dihybrid','simple.recessive','simple.dominant',
+   map <- match.arg(map, c('dihybrid','simple.recessive','simple.dominant', 'quantitative',
                            'double.recessive','double.dominant','double.dominant.recessive'))
    if (map == 'dihybrid') {
       f <- f
@@ -118,6 +118,10 @@ phenotype <- function(x, map = 'dihybrid'){
    } else if (map == 'double.dominant.recessive') {
       f[f == 1] <- 3
       f[f == 0] <- 3
+   } else if (map == 'quantitative') {
+      f <- sapply(z, function(y) {
+         sum(sapply(y, function(w) sum(w %in% LETTERS)))  
+      })
    }
    return(structure(f, dim = dim(x)))
 }
@@ -125,7 +129,7 @@ phenotype <- function(x, map = 'dihybrid'){
 punnet <- function(x, palette = 'Egypt', map = 'dihybrid') {
    stopifnot(is.matrix(x))
    stopifnot(is.character(x))
-   Map <- match.arg(map, c('dihybrid', 'simple.recessive', 'simple.dominant',
+   Map <- match.arg(map, c('dihybrid', 'simple.recessive', 'simple.dominant', 'quantitative',
                            'double.recessive', 'double.dominant', 'double.dominant.recessive'))
    n <- dim(x)[1]
    m <- dim(x)[2]

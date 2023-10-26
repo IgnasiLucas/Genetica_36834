@@ -9,6 +9,46 @@ header-includes:
   - \usepackage[catalan]{babel}
 ---
 
+## La regresión a la mediocridad
+
+Algunos años antes del redescubrimiento del trabajo de Gregor Mendel, Francis
+Galton había estado estudiando la herencia de caracteres cuantitativos, como
+la altura en humanos o el tamaño de las semillas de alguna planta. Una de sus
+conclusiones fue la llamada *ley de la regresión hacia la mediocridad* [@Galton1886].
+Lo que esta *ley* empírica viene a decir es que en cualquier carácter que podamos
+medir en una población, los individuos suelen manifestar valores de ese carácter
+menos extremos que los de sus progenitores. Por ejemplo, una pareja muy alta
+tiende a tener descendencia más baja que ellos mismos; mientras que una pareja
+muy baja tiende a tener descendencia más alta que ellos. Este acercamiento al
+valor medio de la población motivó el uso del término *regresión* (a la mediocridad),
+palabra que terminó por significar la técnica estadística inventada por Galton.
+
+```{r Galton, echo=FALSE}
+
+```
+
+Galton interpretó esta observación como evidencia de que los caracteres no se
+heredaban íntegramente del padre y de la madre, sino también de todos los ancestros
+anteriores de un individuo. Esta concepción de la herencia como algo fluído, que
+se mezcla y que incluye una parte procedente de ancestros remotos era difícil de reconciliar
+con la visión Mendeliana de factores discretos, provenientes sólo del padre y de
+la madre. El problema no era sólo el hecho de que Mendel
+se había fijado en caracteres cualitativos y Galton, en caracteres cuantitativos.
+En este sentido, era obvio también para Galton que un carácter como la estatura
+humana estaba *compuesto* por multitud caracteres, y que como consecuencia de ello
+la variación en estatura sería contínua, incluso si cada componente de la estatura
+estuviera determinado por factores Mendelianos. De todos modos, los experimentos
+de Herman Nilsson-Ehle demostraron elegantemente que la variación continua no
+se contradecía con los principios de herencia Mendeliana.
+
+## Experimentos de Herman Nilsson-Ehle
+
+
+
+
+
+
+
 ## Introducción
 El desarrollo de la genética cuantitativa en la primera mitad del siglo XX contribuyó
 al éxito de las campañas de mejora genética. Éstas, junto con la mecanización y el uso
@@ -51,8 +91,9 @@ El esquema a seguir para introducir estos conceptos es el siguiente:
 Normalmente la genética cuantitativa es la genética de los caracteres **poligénicos**, tanto
 si el fenotipo se puede medir en una escala continua como si es binario (e.g., enfermo o
 sano). Pero imaginemos ahora que el carácter determinado por este único locus bialélico
-se mide en una escala contínua. Si ningún otro gen ni el ambiente influyen en el carácter,
-habrá dos (con dominancia completa) o tres fenotipos posibles.
+se mide en una escala contínua. Si cualquier otro gen implicado en el carácter es
+monomórfico en la población y todos los indivíduos experimentan exactamente el mismo
+ambiente, entonces habrá dos (con dominancia completa) o tres fenotipos posibles.
 
 El valor del fenotipo determinado por el genotipo se representa con el símbolo $G$, y
 se le llama *valor genotípico*, pero se mide en unidades del **fenotipo**. La escala
@@ -78,7 +119,7 @@ de un cierto tipo no es lineal. Pero a @Fisher1918 se le ocurrió la buena idea 
 considerar una aproximación lineal a la relación entre el contenido génico (número de
 alelos $B_2$, por ejemplo) y el valor genotípico, $G$. Esta *regresión* permite
 descomponer conceptualmente el valor genotípico en una parte atribuible al efecto
-*aditivo* o heredable de los alelos (el valor genotípco *estimado*, $\hat{G}$) y una
+*aditivo* o heredable de los alelos (el valor genotípico *estimado*, $\hat{G}$) y una
 desviación causada por la dominancia, $\delta_{ij}$:
 
 \begin{equation}
@@ -91,7 +132,7 @@ Una forma de expresar la regresión es esta:
 G_{ij} = \mu_G + \alpha_1 N_1 + \alpha_2 N_2 + \delta_{ij}
 \end{equation}
 
-Donde $\mu_G$ sería el valor genotípico medio en la población, $\alpha_1$ y $\alpha_2$ son los
+Donde $\mu_G$ es el valor genotípico **medio** en la población, $\alpha_1$ y $\alpha_2$ son los
 coeficientes de regresión parciales, correspondientes a los efectos de los alelos de un tipo ($B_1$)
 y del otro ($B_2$). Y $N_1$ y $N_2$ son el número de alelos $B_1$ o $B_2$ presentes en el
 genotipo; estas son las variables predictivas. Los coeficientes $\alpha_1$ y $\alpha_2$
