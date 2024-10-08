@@ -1,0 +1,40 @@
+---
+title: "Ejemplo de descomposición de la varianza"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r vacas}
+p1 <- 0.5
+q1 <- 0.5
+p2 <- 0.3
+q2 <- 0.7
+N <- 2000
+vacas <- data.frame(
+   Locus1 = factor(sample(c('aa', 'Aa', 'AA'), size = N,
+                   prob = c(q1^2, 2*p1*q1, p1^2), replace = TRUE)),
+   Locus2 = factor(sample(c('bb', 'Bb', 'BB'), size = N,
+                   prob = c(q2^2, 2*p2*q2, p2^2), replace = TRUE))
+)
+vacas$A <- 0
+vacas[vacas$Locus1 == 'Aa', 'A'] <- 1
+vacas[vacas$Locus1 == 'AA', 'A'] <- 2
+
+vacas$B <- 0
+vacas[vacas$Locus2 == 'Bb', 'B'] <- 1
+vacas[vacas$Locus2 == 'BB', 'B'] <- 2
+
+vacas$Leche <- numeric(length = N)
+vacas[vacas$Locus1 == 'aa', 'Leche'] <- 27
+vacas[vacas$Locus1 == 'Aa', 'Leche'] <- 27 + 3
+vacas[vacas$Locus1 == 'AA', 'Leche'] <- 27 + 3
+vacas[vacas$Locus2 == 'Bb', 'Leche'] <- vacas[vacas$Locus2 == 'Bb', 'Leche'] + 1
+vacas[vacas$Locus2 == 'BB', 'Leche'] <- vacas[vacas$Locus2 == 'BB', 'Leche'] + 4
+vacas[vacas$Locus1 == 'AA' & vacas$Locus2 == 'BB', 'Leche'] <- 
+   vacas[vacas$Locus1 == 'AA' & vacas$Locus2 == 'BB', 'Leche'] + 2
+```
+

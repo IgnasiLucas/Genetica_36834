@@ -138,7 +138,7 @@ generación.
 
 ## Equilibrio de Hardy-Weinberg
 
-Las frecuencias genotípicas se mantienen constantes en siempre que en una
+Las frecuencias genotípicas se mantienen constantes siempre que en una
 población diploide:
 
 1. La reproducción sea sexual y aleatoria (i.e., no hay consanguinidad).
@@ -179,8 +179,71 @@ $$p = \frac{2\times 141 + 262}{2\times 500} = 0.544$$
 $$q = \frac{2\times 97 + 262}{2\times 500} = 0.456$$
 </div>
 
+## Algunas conclusiones
 
-## 
+1. La **dominancia** en sí no tiene ningúna importancia en los posibles cambios de una
+población a lo largo del tiempo.
+2. Si la reproducción es aleatoria, las frecuencias genotípicas están determinadas
+por las **frecuencias alélicas**:
+   - Frecuencia de homocigotos de un tipo: $P = p^2$
+   - Frecuencia de heterocigotos: $H = 2\cdot p\cdot q$
+   - Frecuencia de homocigotos del otro tipo: $Q = q^2$
+3. Lo fundamental de la **evolución** son los cambios en las frecuencias alélicas.
+
+## Con tres alelos {.smaller}
+
+<div style="float: left; width: 50%;">
+
+```{r}
+library(kableExtra)
+T <- data.frame(Fenotipo = c('A','AB','A','B','B','O'),
+                Genotipo = c('$I^AI^A$', '$I^AI^B$', '$I^AI^0$',
+                             '$I^BI^B$', '$I^BI^0$', '$I^0I^0$'),
+                Frecuencia = c('$p^2$', '$2pq$', '$2pr$', '$q^2$', '$2qr$', '$r^2$'))
+kable(T) %>% kable_styling(full_width = FALSE)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r}
+T <- data.frame(Alelo = c('$I^A$', '$I^B$', '$I^0$'),
+                Frecuencia = c('p', 'q', 'r'))
+kable(T) %>% kable_styling(full_width = FALSE)
+```
+
+$$
+p + q + r = 1\\
+(p+q+r)^2 = 1\\
+p^2 + 2pq + 2pr + q^2 + 2qr + r^2 = 1
+$$
+</div>
+
+## En el cromosoma X
+
+$$
+p = \text{Frecuencia del alelo } X^1\\
+q = \text{Frecuencia del alelo } X^2
+$$
+
+```{r}
+T <- data.frame(Genotipo = c('$X^1X^1$', '$X^1X^2$', '$X^2X^2$', '$X^1Y$','$X^2Y$'),
+                Sexo = c('hembra', 'hembra', 'hembra', 'macho', 'macho'),
+                Frecuencia = c('$p^2$', '$2pq$', '$q^2$', '$p$', '$q$'))
+kable(T) %>% kable_styling()
+```
+
+Las frecuencias genotípicas se expresan en cada sexo por separado.
+
+## Cómo comprobar el equilibrio {.smaller}
+Una muestra de individuos mostró los grupos sanguíneos siguientes: 114 MM, 76 MN
+y 10 NN (total: 200). ¿Está en equilibrio de Hardy-Weinberg esta población?
+
+```{r}
+T <- data.frame(Genotipo = c('MM', 'MN', 'NN'),
+                Observados = c())
+```
 
 
 ## Apéndice

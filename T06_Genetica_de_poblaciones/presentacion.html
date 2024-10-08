@@ -9,7 +9,7 @@
 
 
 
-  <meta name="date" content="2023-10-04" />
+  <meta name="date" content="2024-10-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3061,18 +3061,21 @@ var loadDeck = function(event) {
   });
 };
 
-if (document.readyState !== "loading" &&
-    document.querySelector('slides') === null) { 
-  // if the document is done loading but our element hasn't yet appeared, defer
-  // loading of the deck
-  window.setTimeout(function() {
-    loadDeck(null);
-  }, 0);
-} else {
-  // still loading the DOM, so wait until it's finished
-  document.addEventListener("DOMContentLoaded", loadDeck);
-}
+if (!window.Shiny) {
+  // If Shiny is loaded, the slide deck is initialized in ioslides template
 
+  if (document.readyState !== "loading" &&
+      document.querySelector('slides') === null) {
+    // if the document is done loading but our element hasn't yet appeared, defer
+    // loading of the deck
+    window.setTimeout(function() {
+      loadDeck(null);
+    }, 0);
+  } else {
+    // still loading the DOM, so wait until it's finished
+    document.addEventListener("DOMContentLoaded", loadDeck);
+  }
+}
 
 
 </script>
@@ -4158,7 +4161,7 @@ ul.task-list{list-style: none;}
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">2023-10-04</p>
+            <p style="margin-top: 6px; margin-left: -2px;">2024-10-07</p>
           </hgroup>
   </slide>
 
@@ -4668,7 +4671,9 @@ Total:
 
 </table>
 
-<p>\(P&#39; = \left(P + \frac{H}{2}\right)^2, \qquad H&#39; = 2\left(P + \frac{H}{2}\right)\left(Q + \frac{H}{2}\right), \qquad Q&#39; = \left(Q + \frac{H}{2}\right)^2\)</p>
+<p>\(P&#39; = \left(P + \frac{H}{2}\right)^2, \qquad
+H&#39; = 2\left(P + \frac{H}{2}\right)\left(Q + \frac{H}{2}\right), \qquad
+Q&#39; = \left(Q + \frac{H}{2}\right)^2\)</p>
 
 </article></slide><slide class=""><hgroup><h2>¿Cambian las frecuencias genotípicas?</h2></hgroup><article  id="cambian-las-frecuencias-genotípicas-3">
 
@@ -4684,7 +4689,7 @@ Total:
 
 </article></slide><slide class=""><hgroup><h2>Equilibrio de Hardy-Weinberg</h2></hgroup><article  id="equilibrio-de-hardy-weinberg">
 
-<p>Las frecuencias genotípicas se mantienen constantes en siempre que en una población diploide:</p>
+<p>Las frecuencias genotípicas se mantienen constantes siempre que en una población diploide:</p>
 
 <ol>
 <li>La reproducción sea sexual y aleatoria (i.e., no hay consanguinidad).</li>
@@ -4831,7 +4836,426 @@ Total:
 <div style="float: right; width: 50%;">
 <p>\[p = \frac{2\times 141 + 262}{2\times 500} = 0.544\] \[q = \frac{2\times 97 + 262}{2\times 500} = 0.456\]</p></div>
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section">
+</article></slide><slide class=""><hgroup><h2>Algunas conclusiones</h2></hgroup><article  id="algunas-conclusiones">
+
+<ol>
+<li>La <strong>dominancia</strong> en sí no tiene ningúna importancia en los posibles cambios de una población a lo largo del tiempo.</li>
+<li>Si la reproducción es aleatoria, las frecuencias genotípicas están determinadas por las <strong>frecuencias alélicas</strong>:
+
+<ul>
+<li>Frecuencia de homocigotos de un tipo: \(P = p^2\)</li>
+<li>Frecuencia de heterocigotos: \(H = 2\cdot p\cdot q\)</li>
+<li>Frecuencia de homocigotos del otro tipo: \(Q = q^2\)</li>
+</ul></li>
+<li>Lo fundamental de la <strong>evolución</strong> son los cambios en las frecuencias alélicas.</li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>Con tres alelos</h2></hgroup><article  id="con-tres-alelos" class="smaller">
+
+<div style="float: left; width: 50%;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Fenotipo
+
+</th>
+
+<th style="text-align:left;">
+
+Genotipo
+
+</th>
+
+<th style="text-align:left;">
+
+Frecuencia
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+A
+
+</td>
+
+<td style="text-align:left;">
+
+\(I^AI^A\)
+
+</td>
+
+<td style="text-align:left;">
+
+\(p^2\)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+AB
+
+</td>
+
+<td style="text-align:left;">
+
+\(I^AI^B\)
+
+</td>
+
+<td style="text-align:left;">
+
+\(2pq\)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+A
+
+</td>
+
+<td style="text-align:left;">
+
+\(I^AI^0\)
+
+</td>
+
+<td style="text-align:left;">
+
+\(2pr\)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+B
+
+</td>
+
+<td style="text-align:left;">
+
+\(I^BI^B\)
+
+</td>
+
+<td style="text-align:left;">
+
+\(q^2\)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+B
+
+</td>
+
+<td style="text-align:left;">
+
+\(I^BI^0\)
+
+</td>
+
+<td style="text-align:left;">
+
+\(2qr\)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+O
+
+</td>
+
+<td style="text-align:left;">
+
+\(I^0I^0\)
+
+</td>
+
+<td style="text-align:left;">
+
+\(r^2\)
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table></div>
+
+<div style="float: right; width: 50%;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Alelo
+
+</th>
+
+<th style="text-align:left;">
+
+Frecuencia
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+\(I^A\)
+
+</td>
+
+<td style="text-align:left;">
+
+p
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+\(I^B\)
+
+</td>
+
+<td style="text-align:left;">
+
+q
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+\(I^0\)
+
+</td>
+
+<td style="text-align:left;">
+
+r
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<p>\[
+p + q + r = 1\\
+(p+q+r)^2 = 1\\
+p^2 + 2pq + 2pr + q^2 + 2qr + r^2 = 1
+\]</p></div>
+
+</article></slide><slide class=""><hgroup><h2>En el cromosoma X</h2></hgroup><article  id="en-el-cromosoma-x">
+
+<p>\[
+p = \text{Frecuencia del alelo } X^1\\
+q = \text{Frecuencia del alelo } X^2
+\]</p>
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Genotipo
+
+</th>
+
+<th style="text-align:left;">
+
+Sexo
+
+</th>
+
+<th style="text-align:left;">
+
+Frecuencia
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+\(X^1X^1\)
+
+</td>
+
+<td style="text-align:left;">
+
+hembra
+
+</td>
+
+<td style="text-align:left;">
+
+\(p^2\)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+\(X^1X^2\)
+
+</td>
+
+<td style="text-align:left;">
+
+hembra
+
+</td>
+
+<td style="text-align:left;">
+
+\(2pq\)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+\(X^2X^2\)
+
+</td>
+
+<td style="text-align:left;">
+
+hembra
+
+</td>
+
+<td style="text-align:left;">
+
+\(q^2\)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+\(X^1Y\)
+
+</td>
+
+<td style="text-align:left;">
+
+macho
+
+</td>
+
+<td style="text-align:left;">
+
+\(p\)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+\(X^2Y\)
+
+</td>
+
+<td style="text-align:left;">
+
+macho
+
+</td>
+
+<td style="text-align:left;">
+
+\(q\)
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<p>Las frecuencias genotípicas se expresan en cada sexo por separado.</p>
+
+</article></slide><slide class=""><hgroup><h2>Cómo comprobar el equilibrio</h2></hgroup><article  id="cómo-comprobar-el-equilibrio">
 
 </article></slide><slide class=""><hgroup><h2>Apéndice</h2></hgroup><article  id="apéndice">
 
@@ -4879,7 +5303,7 @@ Total:
 
 </article></slide><slide class=""><hgroup><h2>References</h2></hgroup><article  id="references" class="unnumbered">
 
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-Hardy1908" class="csl-entry">
 <p>Hardy, G. H. 1908. <span>
 “Mendelian Proportions in a Mixed Population.”</span> <em>Science</em> 28: 49–50. <a href='https://doi.org/10.1126/science.28.706.49' title=''>https://doi.org/10.1126/science.28.706.49</a>.</p></div></div></article></slide>
@@ -4909,6 +5333,11 @@ Total:
        window.jQuery(document).on('slideenter', function(e) {
          window.jQuery(e.target).trigger('shown');
       });
+    }
+    if (window.Shiny) {
+      // Initialize slides when this script appears on the page, since it
+      // indicates that the <slides> markup has been fully loaded.
+      window.loadDeck();
     }
   })();
 </script>
