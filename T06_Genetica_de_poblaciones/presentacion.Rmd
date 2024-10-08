@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ## La pregunta de Yule 
 
 <div style="float: left; width: 50%;">
+
 ```{r mendel, echo=FALSE}
 par(mfrow = c(1,2), mar = c(0,0,4,0))
 plot(c(0,1), c(0, 1), type='n', axes = FALSE, xlab = '', ylab = '',
@@ -24,6 +25,7 @@ text(c(0.3, 0.7, 0.9), 0.1,
      labels = c('3 Dominantes', ':', '1\nRecesivo'), cex = 1.2)
 par(mfrow = c(1,1))
 ```
+
 </div>
 
 <div style="float: right; width: 50%;">
@@ -236,15 +238,80 @@ kable(T) %>% kable_styling()
 
 Las frecuencias genotípicas se expresan en cada sexo por separado.
 
-## Cómo comprobar el equilibrio {.smaller}
+## Cómo comprobar el equilibrio
 Una muestra de individuos mostró los grupos sanguíneos siguientes: 114 MM, 76 MN
 y 10 NN (total: 200). ¿Está en equilibrio de Hardy-Weinberg esta población?
 
 ```{r}
-T <- data.frame(Genotipo = c('MM', 'MN', 'NN'),
-                Observados = c())
+T <- data.frame(Genotipo = c('MM', 'MN', 'NN', ''),
+                Observados = c(114, 76, 10, 114+76+10),
+                Esperados = c('', '', '', ''),
+                Dif = c('', '', '', ''))
+kable(T, col.names = c('Genotipo', 'Observados', 'Esperados', '$(O-E)^2/E$'),
+      align = c('l', 'r', 'r', 'r')) %>%
+  kable_styling(full_width = TRUE)
 ```
 
+Partimos de 3 datos: 3 grados de libertad, en principio. Pero...
+
+## Cómo comprobar el equilibrio
+
+```{r}
+T$Esperados <- c('$N\\times p^2$', '$N\\times 2pq$', '$N\\times q^2$', '$N$')
+kable(T, col.names = c('Genotipo', 'Observados', 'Esperados', '$(O-E)^2/E$'),
+      align = c('l', 'r', 'c', 'r')) %>%
+  kable_styling(full_width = TRUE)
+```
+
+¿Cuántos parámetros necesitamos *fijar* para calcular los números *esperados*?
+
+## Cómo comprobar el equilibrio
+
+```{r}
+T$Esperados <- c('$N\\times p^2$', '$N\\times 2pq$', '$N\\times q^2$', '$N$')
+kable(T, col.names = c('Genotipo', 'Observados', 'Esperados', '$(O-E)^2/E$'),
+      align = c('l', 'r', 'c', 'r')) %>%
+  kable_styling(full_width = TRUE)
+```
+
+¿Cuántos parámetros necesitamos *fijar* para calcular los números *esperados*?
+Sólo dos: $N$ y $p$ (o bien, $N$ y $q$), porque $p+q=1$. Por tanto, queda sólo
+$3 - 2 = 1$ grado de libertad.
+
+## Cómo comprobar el equilibrio
+
+```{r}
+N <- sum(T[1:3, 'Observados'])
+p <- (2 * 114 + 76) / (2 * 200)
+q <- (76 + 2 * 10) / (2 * 200)
+T$Esperados <- N * c(p ^ 2, 2 * p * q, q ^ 2, 1)
+T$Dif <- (T$Observados - T$Esperados) ^ 2 / T$Esperados
+T[4, 'Dif'] <- sum(T[1:3, 'Dif'])
+kable(T, col.names = c('Genotipo', 'Observados', 'Esperados', '$(O-E)^2/E$'),
+      align = c('l', 'r', 'r', 'r'), digits = 2) %>%
+  kable_styling(full_width = TRUE)
+```
+
+$$
+p = \frac{2\times 114 + 76}{2\times 200} = 0.76\\
+q = \frac{76 + 2\times 10}{2\times 200} = 0.24 = 1 - p\\
+$$
+
+## Cómo comprobar el equilibrio
+
+```{r}
+X <- 0.35
+x <- seq(from = 0.01, to = 2.5, by = 0.01)
+y <- dchisq(x, 1)
+plot(x, y, type = 'l', xlab = 'X', ylab = 'Densidad de probabilidad',
+     main = expression("Distribución "*chi[1]^2), lwd = 3, cex.main = 2,
+     xlim = c(0, 2))
+polygon(c(x[x >= X], max(x), X), c(y[x >= X], 0, 0), col = 'pink')
+text(0.5, 3, expression(P(X>=0.35)*"="*0.5541131), pos = 4, cex = 1.5)
+axis(1, at = 0.35)
+```
+
+Conclusión: la población parece estar en equilibrio de Hardy-Weinberg.
 
 ## Apéndice
 
