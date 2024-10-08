@@ -20,4 +20,6 @@ Però tingueu paciència si trieu aquesta opció (tarda bastant en carregar-se),
 compte que qualsevol desconnexió (per exemple, per uns minuts d'inactivitat) implica perdre
 tots els canvis introduïts.
 
+## Colaboradors
 
+Dimitri, Pablo, Diego, Lucía.
