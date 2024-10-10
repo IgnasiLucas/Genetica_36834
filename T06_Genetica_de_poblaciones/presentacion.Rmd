@@ -313,6 +313,38 @@ axis(1, at = 0.35)
 
 Conclusión: la población parece estar en equilibrio de Hardy-Weinberg.
 
+## Resumen
+
+- **Teoría**: equilibrio de Hardy-Weinberg (*HWE*):
+$$
+P=p^2\\
+H=2pq\\
+Q=q^2
+$$
+
+- **Datos**: Por ejemplo:
+$$
+N\cdot P=114\\
+N\cdot H = 76\\
+N\cdot Q=10
+$$
+
+- **Test**: ¿Se corresponden los datos con la esperanza teórica?
+
+## Otra aplicación de la teoría
+
+- **Teoría**: Equilibrio de Hardy-Weinberg: $Q = q^2$, etc.
+- **Datos parciales**: Por ejemplo, con dominancia:
+$$
+N\cdot (P + H) = 190\\
+N\cdot Q = 10
+$$
+
+- **Estimación**: si $10 \simeq 200 \times q^2$, entonces
+$$
+\hat{q} = \sqrt\frac{10}{200}
+$$
+
 ## Apéndice
 
 Asumiendo reproducción aleatoria, habíamos deducido que las frecuencias
